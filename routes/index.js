@@ -73,7 +73,7 @@ router.get(
   "/google",
   passport.authenticate("google", {
     scope: ["openid", "profile", "email"],
-    redirectUri: "http://localhost:3000/google/callback",
+    redirectUri: "https://lab3-gf6n.onrender.com/google/callback",
   })
 );
 
