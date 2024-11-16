@@ -14,13 +14,13 @@
       Due Date:
     </label>
     {{!-- Safely handle date formatting with null check --}}
-    <input 
-      name="dueDate" 
-      id="dueDate" 
-      required 
-      type="date" 
-      value="{{#if task.dueDate}}{{formatDate task.dueDate}}{{/if}}" 
-    />
+    <input
+  name="dueDate"
+  id="dueDate"
+  required
+  type="date"
+  value="{{#if task.dueDate}}{{toShortDate task.dueDate}}{{/if}}"
+/>
   </fieldset>
   
   <fieldset>
