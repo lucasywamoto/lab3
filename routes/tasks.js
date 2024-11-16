@@ -47,6 +47,7 @@ router.get("/edit/:_id", AuthenticationMiddleware, async (req, res, next) => {
   let taskId = req.params._id;
   let taskData = await Task.findById(taskId);
   let taglist = await Tag.find().sort([["name", "ascending"]]);
+  console.log(taskData.dueDate);
   res.render("tasks/edit", {
     // Changed from "task/edit" to "tasks/edit"
     title: "Edit Task Info",
