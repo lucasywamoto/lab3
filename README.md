@@ -82,7 +82,7 @@ This is a Task Management application built using Node.js, Express, MongoDB, and
 ### **Task Management Routes**
 
 - **GET `/tasks`**: Displays a list of tasks.
-- **GET `/tasks/add`**: Renders the form to add a new task (protected by authentication).
+- **GET `/tasks/add`**: Renders the form to add a new task.
 - **POST `/tasks/add`**: Creates a new task.
 - **GET `/tasks/edit/:_id`**: Renders the form to edit a task.
 - **POST `/tasks/edit/:_id`**: Updates task details.
@@ -92,12 +92,8 @@ This is a Task Management application built using Node.js, Express, MongoDB, and
 ### **Tag Management Routes**
 
 - **GET `/tags`**: Displays a list of tags.
-- **GET `/tags/add`**: Renders the form to add a new tag (protected by authentication).
+- **GET `/tags/add`**: Renders the form to add a new tag.
 - **POST `/tags/add`**: Creates a new tag.
-
-### **Miscellaneous Routes**
-
-- **GET `/`**: Renders the homepage.
 
 ---
 
@@ -121,5 +117,3 @@ This is a Task Management application built using Node.js, Express, MongoDB, and
    - Although this project does not implement roles, additional layers of access control can be added by extending the `AuthenticationMiddleware` to check user roles or permissions.
 
 ---
-
-For additional questions or support, please contact the project maintainer.

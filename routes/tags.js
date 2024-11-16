@@ -4,7 +4,7 @@ const Tag = require("../models/tag");
 const AuthenticationMiddleware = require("../extensions/authentication");
 
 // GET /tags/
-router.get("/", async (req, res, next) => {
+router.get("/", AuthenticationMiddleware, async (req, res, next) => {
   let tags = await Tag.find().sort([["name", "ascending"]]);
   res.render("tags/index", {
     title: "Tag List",
