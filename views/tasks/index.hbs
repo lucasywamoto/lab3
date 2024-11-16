@@ -1,0 +1,74 @@
+<h1>{{title}}</h1>
+
+{{!-- CREATE button - Only visible if there's an authenticated user --}}
+{{#if user}}
+  <a href="/tasks/add" class="btn btn-success">Add a new task</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Completed</th>
+            <th>Task</th>
+            <th>Due Date</th>
+            <th>Tag</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each dataset}}
+        <tr>
+            <td class="align-middle" style="width: 150px;">
+               <input
+  class="form-check-input task-done-checkbox"
+  type="checkbox"
+  data-task-id="{{this._id}}"
+  {{#if this.done}}checked{{/if}}
+  {{#unless ../user}}disabled{{/unless}}
+/>
+            </td>
+            <td class="align-middle">{{this.name}}</td>
+            <td class="align-middle">{{toShortDate this.dueDate}}</td>
+            <td class="align-middle">{{this.tag}}</td>
+            <td class="align-middle">
+                {{#if ../user}}
+                <a href="/tasks/edit/{{this._id}}" class="btn btn-primary">Edit</a>
+                <a href="/tasks/delete/{{this._id}}" onclick="return confirmDeletion()" class="btn btn-danger">Delete</a>
+                {{/if}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{/if}}
+  
+{{#unless user}}
+  <p>You need to be logged in to view the tasks.</p>
+{{/unless}}
+
+<script>
+  const checkboxes = document.querySelectorAll(".task-done-checkbox");
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", async (event) => {
+      const taskId = event.target.dataset.taskId;
+      const doneStatus = event.target.checked;
+
+      try {
+        const response = await fetch(`/tasks/update-done/${taskId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ done: doneStatus }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to update task status");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("There was an error updating the task status.");
+      }
+    });
+  });
+</script>
