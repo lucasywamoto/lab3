@@ -6,7 +6,7 @@ const AuthenticationMiddleware = require("../extensions/authentication");
 
 // GET /projects/
 router.get("/", AuthenticationMiddleware, async (req, res, next) => {
-  let tasks = await Task.find().sort([["dueDate", "descending"]]);
+  let tasks = await Task.find().sort([["dueDate", "ascending"]]);
   res.render("tasks/index", {
     title: "Task List",
     dataset: tasks,
