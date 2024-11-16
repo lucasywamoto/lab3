@@ -38,22 +38,6 @@
       {{/each}}
     </select>
   </fieldset>
-  
-  <fieldset>
-    <label for="status" class="col-2">
-      Status:
-    </label>
-    <select name="status" id="status">
-      {{#each (array "TO DO" "IN PROGRESS" "DONE")}}
-        <option 
-          value="{{this}}" 
-          {{#if (eq this ../task.status)}}selected{{/if}}
-        >
-          {{this}}
-        </option>
-      {{/each}}
-    </select>
-  </fieldset>
 
   <button type="submit" class="offset-3 btn btn-primary">
     Save
