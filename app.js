@@ -101,24 +101,31 @@ mongoose
   .catch((error) => console.log(`Error while connecting: ${error}`));
 // Sub-Expressions https://handlebarsjs.com/guide/builtin-helpers.html#sub-expressions
 // function name and helper function with parameters
+// Your existing helpers
 hbs.registerHelper("createOptionElement", (currentValue, selectedValue) => {
   console.log(currentValue + " " + selectedValue);
-  // initialize selected property
   var selectedProperty = "";
-  // if values are equal set selectedProperty accordingly
   if (currentValue == selectedValue.toString()) {
     selectedProperty = "selected";
   }
-  // return html code for this option element
-  // return new hbs.SafeString('<option '+ selectedProperty +'>' + currentValue + '</option>');
   return new hbs.SafeString(
     `<option ${selectedProperty}>${currentValue}</option>`
   );
 });
-// helper function to format date values
+
 hbs.registerHelper("toShortDate", (longDateValue) => {
   return new hbs.SafeString(longDateValue.toLocaleDateString("en-CA"));
 });
+
+// Add these new helpers
+hbs.registerHelper("eq", function (a, b) {
+  return a === b;
+});
+
+hbs.registerHelper("array", function (...args) {
+  return args.slice(0, -1);
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
