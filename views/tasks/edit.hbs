@@ -2,48 +2,60 @@
   {{title}}
 </h1>
 <form method="POST">
-  {{! Input names have to match the name of the fields in the mongo schema object }}
-  {{! Mapping is not automatic, but it's best practices }}
   <fieldset>
     <label for="name" class="col-2">
       Name:
     </label>
     <input name="name" id="name" required value="{{task.name}}" />
   </fieldset>
+  
   <fieldset>
     <label for="dueDate" class="col-2">
       Due Date:
     </label>
-    {{!-- Use hbs helper function to format date stored in the database accordingly --}}
-    <input name="dueDate" id="dueDate" required type="date" value="{{toShortDate Task.dueDate}}" />
+    {{!-- Safely handle date formatting with null check --}}
+    <input 
+      name="dueDate" 
+      id="dueDate" 
+      required 
+      type="date" 
+      value="{{#if task.dueDate}}{{formatDate task.dueDate}}{{/if}}" 
+    />
   </fieldset>
+  
   <fieldset>
     <label for="course" class="col-2">
       Course:
     </label>
-    {{! <input name="course" id="course" required /> }}
     <select name="tag" id="tag">
       {{#each tags}}
-        {{! Use HBS helper function to customize rendering }}
-        {{createOptionElement this.name ../project.tag}}
+        <option 
+          value="{{this.name}}" 
+          {{#if (eq this.name ../task.tag)}}selected{{/if}}
+        >
+          {{this.name}}
+        </option>
       {{/each}}
     </select>
   </fieldset>
-  {{! Add fieldset for status }}
+  
   <fieldset>
     <label for="status" class="col-2">
       Status:
     </label>
-    {{! <input name="course" id="course" required /> }}
     <select name="status" id="status">
-        {{! Use HBS helper function to customize rendering }}
-        {{createOptionElement "TO DO" task.status}}
-        {{createOptionElement "IN PROGRESS" task.status}}
-        {{createOptionElement "DONE" task.status}}
+      {{#each (array "TO DO" "IN PROGRESS" "DONE")}}
+        <option 
+          value="{{this}}" 
+          {{#if (eq this ../task.status)}}selected{{/if}}
+        >
+          {{this}}
+        </option>
+      {{/each}}
     </select>
   </fieldset>
-  {{! Button needs to be inside <form> element to trigger POST }}
-  <button class="offset-3 btn btn-primary">
+
+  <button type="submit" class="offset-3 btn btn-primary">
     Save
   </button>
 </form>
